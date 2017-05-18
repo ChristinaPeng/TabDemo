@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tab栏切换demo</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #F7F7F7;
+        }
+
+        .tabs {
+            width: 400px;
+            margin: 100px auto;
+            background-color: #FFF;
+            border: 1px solid #488bad;
+            box-sizing: border-box;
+        }
+
+        .tabs nav {
+            height: 40px;
+            text-align: center;
+            line-height: 40px;
+            overflow: hidden;
+            background-color: #488bad;
+            display: flex;
+        }
+
+        nav a {
+            display: block;
+            width: 100px;
+            color: #fff;
+            border-right: 1px solid #fff;
+            text-decoration: none;
+        }
+
+        nav a.active {
+            background-color: #8FBC8F;
+        }
+
+        nav a:last-child {
+            border-right: none;
+        }
+
+        .cont {
+            overflow: hidden;
+            display: none;
+        }
+
+        .cont ol {
+            line-height: 30px;
+        }
+    </style>
+</head>
+<body>
+<div class="tabs">
+    <nav>
+        <!--自定义属性-->
+        <a href="javascript:;" data-cont="local">新品首发</a>
+        <a href="javascript:;" data-cont="global">全球尖货</a>
+        <a href="javascript:;" data-cont="sports">智能生活</a>
+        <a href="javascript:;" data-cont="funny">服饰美装</a>
+    </nav>
+
+    <section class="cont" id="local">
+        <ol>
+            <li>亲爱的大人</li>
+            <li>我们烂尾的青春</li>
+            <li>小指轻挑之微薄</li>
+            <li>只有你知道我的装疯卖傻</li>
+            <li>不问前程的心之所向</li>
+            <li>那触手可及的幸福</li>
+        </ol>
+
+    </section>
+
+    <section class="cont" id="global">
+        <ol>
+            <li>前言 如何善用本书</li>
+            <li>第一部分 重新探索自我</li>
+            <li>第一章 由内而外全面造就自己</li>
+            <li>第二章 七个习惯——概论</li>
+            <li>第二部分 个人的成功：从依赖到独立</li>
+            <li>第三章 习惯一：积极主动——个人愿景的原则</li>
+        </ol>
+    </section>
+
+
+    <section class="cont" id="sports">
+        <ol>
+            <li>第一章　这个功利的世界，不需要我们将就</li>
+            <li>在这个功利的世界成功地活／003</li>
+            <li>不用怀疑，你是独一无二的／007</li>
+            <li>生活不是知难而退的过程／011</li>
+            <li>坚持本心，过想要的生活／015</li>
+            <li>你要对自己的人生负责／019</li>
+        </ol>
+    </section>
+
+    <section class="cont" id="funny">
+        <ol>
+            <li>引言 正在发生的生活、工作与思维的大变革</li>
+            <li>第一部分 大数据时代的思维变革</li>
+            <li>第1章 更多：不是随机样本，而是所有数据</li>
+            <li>第2章 更杂：不是精确性，而是混杂性</li>
+            <li>第3章 更好：不是因果关系，而是相关关系</li>
+            <li>第二部分 大数据时代的商业变革</li>
+        </ol>
+    </section>
+</div>
+
+<script>
+    //1. 可以根据页签来初始化  默认初始化某个页签
+    //2. 点击当前页面，改变样式，显示对应内容
+
+    window.onload = function () {
+        (function (initTabIndex) {
+            // 选择nav下面所有的a标签
+            var aList = document.querySelectorAll("nav >a");
+            //1. 可以根据页签来初始化  默认初始化某个页签
+            var initTab = aList[initTabIndex];
+            //给当前选中的标签加样式
+            initTab.classList.add("active");
+            //通过自定义属性，选中对应标签，让内容显示出来
+            document.querySelector("#"+initTab.dataset.cont).style.display="block";
+
+            //2. 点击当前页面，改变样式，显示对应内容
+            //给父元素nav绑定事件，
+            document.querySelector('nav').onclick= function (e) {
+                // 获取当前的元素
+                var currentTab= e.target;
+                //移除上一次的页签样式和内容
+                var oldTab=document.querySelector("nav>a.active");
+                //获取之前的自定义属性
+                var oldId=oldTab.dataset.cont;
+                //移除之前的页签的样式
+                oldTab.classList.remove("active");
+                //让之间的隐藏
+                document.querySelector("#"+oldId).style.display="none";
+                //让当前的加样式
+                currentTab.classList.add('active');
+                //让当前的内容显示
+                document.querySelector("#"+currentTab.dataset.cont).style.display="block";
+
+            }
+
+        })(0);
+    }
+
+</script>
+</body>
+</html>
